@@ -1,0 +1,23 @@
+<?php
+
+class CustomersHandler implements HandlerInterface
+{
+    public function prepare($data)
+    {
+        $customers = array();
+
+        foreach ($data as $customer) {
+            $customers[] = array(
+                'id' => $customer['id'],
+                'firstName' => $customer['firstName'],
+				'email' => $customer['email'],
+				'createdAt' => $customer['createdAt'],
+				'site' => 'Simpla Shop',
+				'vip' => $customer['vip'],
+				'personalDiscount' => $customer['personalDiscount']
+            );
+        }
+
+        return $customers;
+    }
+}
