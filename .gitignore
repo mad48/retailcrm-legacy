@@ -3,7 +3,3 @@
 /retailcrm/data/upload/*.gz
 /retailcrm/data/logs/*/*.log
 
-/retailcrm/bundle/handler/*.php
-/retailcrm/bundle/mail/*.txt
-/retailcrm/bundle/sql/*.sql
-/retailcrm/bundle/extend/*/*.php
