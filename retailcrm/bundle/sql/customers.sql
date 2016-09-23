@@ -1,5 +1,6 @@
 SELECT
 	customers.id as `id`,
+	customers.id as `externalId`,
 	customers.name as `firstName`,
 	`email` as `email`,
 	`created` as `createdAt`,
