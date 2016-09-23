@@ -5,10 +5,14 @@ class DebugHelper
     private $baseMemoryUsage;
     private $tusage;
     private $rusage;
-
+	private $os;
+	
     public function __construct()
     {
-        $this->baseMemoryUsage = memory_get_usage(true);
+        $this->os = strtoupper(substr(PHP_OS, 0, 3));
+		if ($this->os === 'WIN') return true;
+		
+		$this->baseMemoryUsage = memory_get_usage(true);
 
         $proc = getrusage();
         $this->tusage = microtime(true);
@@ -17,7 +21,7 @@ class DebugHelper
 
     private function formatSize($size)
     {
-        $postfix = array('b', 'Kb', 'Mb', 'Gb', 'Tb');
+		$postfix = array('b', 'Kb', 'Mb', 'Gb', 'Tb');
         $position = 0;
         while ($size >= 1024 && $position < 4) {
             $size /= 1024;
@@ -29,12 +33,12 @@ class DebugHelper
 
     public function getMemoryUsage()
     {
-        return $this->formatSize(memory_get_usage(true) - $this->baseMemoryUsage);
+		return $this->formatSize(memory_get_usage(true) - $this->baseMemoryUsage);
     }
 
     public function getCpuUsage()
     {
-        $proc = getrusage();
+		$proc = getrusage();
         $proc["ru_utime.tv_usec"] = ($proc["ru_utime.tv_sec"] * 1e6 + $proc["ru_utime.tv_usec"]) - $this->rusage;
         $time = (microtime(true) - $this->tusage) * 1000000;
 
@@ -43,6 +47,7 @@ class DebugHelper
 
     public function write($string)
     {
-        echo sprintf("%s\t%s\t%s%s", $string, $this->getCpuUsage(), $this->getMemoryUsage(), PHP_EOL);
+        if ($this->os === 'WIN') return true;
+		echo sprintf("%s\t%s\t%s%s", $string, $this->getCpuUsage(), $this->getMemoryUsage(), PHP_EOL);
     }
 }
