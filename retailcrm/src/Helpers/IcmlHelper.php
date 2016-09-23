@@ -176,7 +176,13 @@ class IcmlHelper
             if (!array_key_exists('productName', $offer) || empty($offer['productName'])) {
                 $offer['productName'] = $offer['name'];
             }
-
+			
+            if (array_key_exists('pictures', $offer) || !empty($offer['pictures'])) {
+                 foreach ($offer['pictures'] as $picture) {
+                    $e->addChild('picture', $picture);
+                }
+            }
+			
             unset($offer['id'], $offer['productId'], $offer['categoryId'], $offer['quantity']);
             array_walk($offer, array($this, 'setOffersProperties'), $e);
 
@@ -188,6 +194,7 @@ class IcmlHelper
         }
     }
 
+	
     private function setOffersProperties($value, $key, &$e) {
         if (in_array($key, $this->properties) && $key != 'params') {
             $e->addChild($key, htmlspecialchars($value));
