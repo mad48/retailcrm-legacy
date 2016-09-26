@@ -1,5 +1,6 @@
 SELECT
     orders.id AS externalId,
+	orders.id AS `number`,
     (
         CASE
             orders.user_id
@@ -27,9 +28,9 @@ SELECT
             orders.delivery_id
         END
     ) AS deliveryIndex,
-    'Россия' AS deliveryCountry,
-    'Центр' AS deliveryRegion,
-    'Липецк' AS deliveryCity,
+    'Country' AS deliveryCountry,
+    'Region' AS deliveryRegion,
+    'City' AS deliveryCity,
     orders.address AS deliveryAddress,
     orders.delivery_id AS deliveryType,
     orders.delivery_id AS deliveryService,

@@ -36,6 +36,7 @@ ON
     (groups.id = group_id)
 WHERE
     `enabled` = 1
-
+AND
+    customers.created BETWEEN :lastSync AND NOW()
 ORDER BY
     `id`

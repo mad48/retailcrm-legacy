@@ -24,24 +24,33 @@ class OrdersHistoryHandler implements HandlerInterface
         $create = $this->rule->getSQL('orders_history_create');
 
         foreach($data as $record) {
-            if (!empty($record['externalId'])) {
+            if (empty($record['firstName'])) continue;
+			var_dump($record);
+
+			if (!empty($record['externalId'])) {
                 $this->sql = $this->container->db->prepare($update);
-                $this->sql->bindParam(':orderExternalId', $record['externalId']);
+                $this->sql->bindParam(':externalId', $record['externalId']);//echo "update";
             } else {
                 $this->sql = $this->container->db->prepare($create);
                 if (!empty($record['createdAt'])) {
-                    $this->sql->bindParam(':createdAt', $record['createdAt']);
+                    $this->sql->bindParam(':createdAt', $record['createdAt']);//echo "create";
                 } else {
                     $this->sql->bindParam(':createdAt', $var = NULL);
                 }
             }
-
+/*
+			if (!empty($record['number'])) {
+                $this->sql->bindParam(':number', $record['number']);
+            } else {
+                $this->sql->bindParam(':number', $var = NULL);
+            }
+		*/	
             if (!empty($record['firstName'])) {
                 $this->sql->bindParam(':firstName', $record['firstName']);
             } else {
                 $this->sql->bindParam(':firstName', $var = NULL);
             }
-
+/*
             if (!empty($record['lastName'])) {
                 $this->sql->bindParam(':lastName', $record['lastName']);
             } else {
@@ -54,7 +63,7 @@ class OrdersHistoryHandler implements HandlerInterface
                 $this->sql->bindParam(':patronymic', $var = NULL);
             }
 
-            if (!empty($record['email'])) {
+           if (!empty($record['email'])) {
                 $this->sql->bindParam(':email', $record['email']);
             } else {
                 $this->sql->bindParam(':email', $var = NULL);
@@ -89,13 +98,13 @@ class OrdersHistoryHandler implements HandlerInterface
             } else {
                 $this->sql->bindParam(':paymentType', $var = NULL);
             }
-
+*/
             if (!empty($record['paymentStatus']) && $record['paymentStatus'] == 'paid') {
                 $this->sql->bindParam(':paymentStatus', $status = 1);
             } else {
                 $this->sql->bindParam(':paymentStatus', $status = 0);
             }
-
+/*
             if (!empty($record['delivery']['address']['index'])) {
                 $this->sql->bindParam(':postcode', $record['delivery']['address']['index']);
             } else {
@@ -113,7 +122,7 @@ class OrdersHistoryHandler implements HandlerInterface
             } else {
                 $this->sql->bindParam(':isCanceled', $cancel = 0);
             }
-
+*/
             try {
                 $this->sql->execute();
                 $this->oid =  $this->container->db->lastInsertId();
@@ -129,8 +138,8 @@ class OrdersHistoryHandler implements HandlerInterface
                 }
             } catch (PDOException $e) {
                 $this->logger->write(
-                    'PDO: ' . $e->getMessage(),
-                    $this->container->errorLog
+                    'PDO: ' . $e->getMessage()//,
+                   // $this->container->errorLog
                 );
                 return false;
             }
@@ -140,18 +149,18 @@ class OrdersHistoryHandler implements HandlerInterface
                 foreach($record['items'] as $item) {
                     $items = $this->rule->getSQL('orders_history_create_items');
                     $this->query = $this->container->db->prepare($items);
-                    $this->query->bindParam(':shop_order_id', $this->oid);
-                    $this->query->bindParam(':shop_items_catalog_items_id', $item['offer']['externalId']);
-                    $this->query->bindParam(':shop_orders_items_name', $item['offer']['name']);
-                    $this->query->bindParam(':shop_orders_items_quantity', $item['quantity']);
-                    $this->query->bindParam(':shop_orders_items_price', $item['initialPrice']);
+                    $this->query->bindParam(':id', $this->oid);
+                    $this->query->bindParam(':variant_id', $item['offer']['externalId']);
+                    $this->query->bindParam(':name', $item['offer']['name']);
+                    $this->query->bindParam(':amount', $item['quantity']);
+                    $this->query->bindParam(':price', $item['initialPrice']);
 
                     try {
                         $this->query->execute();
                     } catch (PDOException $e) {
                         $this->logger->write(
-                            'PDO: ' . $e->getMessage(),
-                            $this->container->errorLog
+                            'PDO: ' . $e->getMessage()//,
+                           // $this->container->errorLog
                         );
                         return false;
                     }

@@ -8,7 +8,7 @@ class ExtendedOrdersBuilder extends Builder
      * @return array
      */
     public function buildOrders()
-    {
+    {echo "buildOrders";
         $query = $this->rule->getSQL('orders');
         $handler = $this->rule->getHandler('OrdersHandler');
         $this->sql = $this->container->db->prepare($query);
@@ -22,7 +22,7 @@ class ExtendedOrdersBuilder extends Builder
      * @return array
      */
     public function buildOrdersLast()
-    {
+    {echo "buildOrdersLast";
         $lastSync = DataHelper::getDate($this->container->ordersLog);
 
         $query = $this->rule->getSQL('orders_last');
@@ -39,7 +39,7 @@ class ExtendedOrdersBuilder extends Builder
      * @return array
      */
     public function buildOrdersById($uidString)
-    {
+    {echo "buildOrdersById";
         $query = $this->rule->getSQL('orders_uid');
         $handler = $this->rule->getHandler('OrdersHandler');
         $this->sql = $this->container->db->prepare($query);
@@ -55,7 +55,7 @@ class ExtendedOrdersBuilder extends Builder
      * @return array
      */
     public function buildOrdersUpdate()
-    {
+    {echo "buildOrdersLast";
         $lastSync = DataHelper::getDate($this->container->ordersUpdatesLog);
 
         $query = $this->rule->getSQL('orders_update_last');
@@ -72,7 +72,7 @@ class ExtendedOrdersBuilder extends Builder
      * @return array
      */
     public function buildOrdersUpdateById($uidString)
-    {
+    {echo "buildOrdersUpdateById";
         $uids = DataHelper::explodeUids($uidString);
         $query = $this->rule->getSQL('orders_update_uid');
         $handler = $this->rule->getHandler('OrdersUpdateHandler');
@@ -88,7 +88,7 @@ class ExtendedOrdersBuilder extends Builder
      * @return array
      */
     public function buildOrdersCustomUpdate()
-    {
+    {echo "buildOrdersCustomUpdate";
         $query = $this->rule->getSQL('orders_update_custom');
         $handler = $this->rule->getHandler('OrdersCustomUpdateHandler');
         $this->sql = $this->container->db->prepare($query);

@@ -11,7 +11,7 @@ class OffersHandler implements HandlerInterface
             
 			$pictures = explode("|", $offers[$k]['picture']);
 			foreach ($pictures as $picture) {
-				$offers[$k]['pictures'][] = $container->shopUrl . '/files/products/'.$picture;
+				$offers[$k]['pictures'][] = $container->shopUrl . '/files/originals/'.$picture;
 			}
 			unset($offers[$k]['picture']);
 			

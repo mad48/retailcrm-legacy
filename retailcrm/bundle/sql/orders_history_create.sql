@@ -1,7 +1,8 @@
 INSERT IGNORE INTO
     `s_orders`
 (
-    `name`,
+    `number`,
+	`name`,
     /*`name`,
     `name`,*/
     `email`,
@@ -22,7 +23,8 @@ INSERT IGNORE INTO
 )
 
 SELECT
-    IF(:firstName IS NOT NULL, :firstName, ''),
+    IF(:number IS NOT NULL, :number, ''),
+	IF(:firstName IS NOT NULL, :firstName, ''),
     /*IF(:lastName IS NOT NULL, :lastName, ''),
     IF(:patronymic IS NOT NULL, :patronymic, ''),*/
     IF(:email IS NOT NULL, :email, ''),

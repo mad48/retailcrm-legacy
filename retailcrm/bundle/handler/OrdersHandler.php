@@ -17,6 +17,8 @@ class OrdersHandler implements HandlerInterface
                 ;
             }
 
+			$order['number'] = $record['number'];
+			
             $order['firstName'] = $record['firstName'];
             $order['lastName'] = $record['lastName'];
             $order['patronymic'] = $record['patronymic'];
@@ -33,6 +35,7 @@ class OrdersHandler implements HandlerInterface
                 'code' => $record['deliveryType'],
                 'service' => array(
                     'code'=> $record['deliveryService'],
+					'name'=> $record['deliveryService'],
                 )
             );
 
