@@ -1,19 +1,23 @@
 INSERT INTO
     `s_purchases`
 (
-    `id`,
+    `order_id`,
     `variant_id`,
-    `name`,
+    `product_name`,
+	`variant_name`,
     `amount`,
-    `price`
+    `price`,
+	`sku`
 )
 
 VALUES
 
 (
-    :id,
+	:order_id,
     :variant_id,
-    :name,
+    :product_name,
+	:variant_name,
     :amount,
-    :price
+    :price,
+	:sku
 )

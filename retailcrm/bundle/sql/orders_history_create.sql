@@ -1,46 +1,38 @@
 INSERT IGNORE INTO
     `s_orders`
 (
-    `number`,
+    `id`,
 	`name`,
-    /*`name`,
-    `name`,*/
     `email`,
     `phone`,
-    `delivery_id`,
-    `delivery_price`,
-    `payment_method_id`,
-    `paid`,
-    `payment_date`,
     `address`,
-    /*`shop_order_index`,*/
+	`delivery_id`,
+	`delivery_price`,
     `comment`,
+	`note`,
+	`total_price`,
+	`discount`,
+	`payment_method_id`,
+	`paid`,
     `date`,
-    `closed`,
-    /*`shop_country_id`,
-    `shop_shops_id`,*/
     `user_id`
 )
 
 SELECT
     IF(:number IS NOT NULL, :number, ''),
 	IF(:firstName IS NOT NULL, :firstName, ''),
-    /*IF(:lastName IS NOT NULL, :lastName, ''),
-    IF(:patronymic IS NOT NULL, :patronymic, ''),*/
     IF(:email IS NOT NULL, :email, ''),
     IF(:phone IS NOT NULL, :phone, ''),
-    IF(:deliveryType IS NOT NULL, :deliveryType, ''),
-    IF(:deliveryCost IS NOT NULL, :deliveryCost, ''),
-    IF(:paymentType IS NOT NULL, :paymentType, ''),
-    IF(:paymentStatus IS NOT NULL, :paymentStatus, 0),
-    IF(:paymentStatus = 1, NOW(), '0000-00-00 00:00:00'),
-    IF(:address IS NOT NULL, :address, ''),
-    /*IF(:postcode IS NOT NULL, :postcode, 0),*/
-    IF(:description IS NOT NULL, :description, ''),
+	IF(:address IS NOT NULL, :address, ''),
+	IF(:postcode IS NOT NULL, :postcode, ''),
+	IF(:deliverycost IS NOT NULL, :deliverycost, ''),
+    IF(:customerComment IS NOT NULL, :customerComment, ''),
+	IF(:managerComment IS NOT NULL, :managerComment, ''),
+	IF(:totalSumm IS NOT NULL, :totalSumm, 0),
+	IF(:discount IS NOT NULL, :discount, 0),
+	IF(:paymentType IS NOT NULL, :paymentType, ''),
+	IF(:paymentStatus IS NOT NULL, :paymentStatus, 0),
     IF(:createdAt IS NOT NULL, :createdAt, NOW()),
-    :isCanceled,
-   /* 175,
-    1,*/
-    (MAX(id) + 1)
+	IF(:customerId IS NOT NULL, :customerId, 0)
 FROM
     `s_orders`

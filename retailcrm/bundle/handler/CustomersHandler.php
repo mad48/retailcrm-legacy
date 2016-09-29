@@ -13,7 +13,6 @@ class CustomersHandler implements HandlerInterface
                 'firstName' => $customer['firstName'],
 				'email' => $customer['email'],
 				'createdAt' => $customer['createdAt'],
-				'site' => '',
 				'vip' => $customer['vip'],
 				'personalDiscount' => $customer['personalDiscount']
             );
