@@ -14,11 +14,11 @@ class OrdersHistoryHandler implements HandlerInterface
             $this->container->settings['api']['key']
         );
 
-        $orderGroups = $this->api->statusGroupsList();
+        /*$orderGroups = $this->api->statusGroupsList();
 
         if (!is_null($orderGroups)) {
             $isCanceled = $orderGroups['statusGroups']['cancel']['statuses'];
-        }
+        }*/
 
         $create = $this->rule->getSQL('orders_history_create');
 
@@ -147,11 +147,15 @@ class OrdersHistoryHandler implements HandlerInterface
 				if (!empty($record['customer']['id'])) $tmp_sql[]="user_id='".$record['customer']['id']."'";
 				if (!empty($record['firstName'])) $tmp_sql[]="name='".$record['firstName']."'";
 				
-				if (!empty($record['delivery']['address']['region']) && 
-					!empty($record['delivery']['address']['city']) && 
-					!empty($record['delivery']['address']['street']))
-						$tmp_sql[]="address='".$record['delivery']['address']['region']." ".$record['delivery']['address']['city']." ".$record['delivery']['address']['street']."'";
+				$delivery_addr = array("region", "city", "metro", "street", "house", "building", "block", "flat", "floor", "intercomCode");
 				
+				foreach($delivery_addr as $item_addr) {
+					if (isset($record["delivery"]["address"][$item_addr])) {
+						$full_addr[] = $record["delivery"]["address"][$item_addr];
+					}
+				}
+				if (!empty($full_addr)) $tmp_sql[]="address='".implode(", ", $full_addr)."'";
+
 				if (!empty($record['delivery']['address']['text'])) $tmp_sql[]="address='".$record['delivery']['address']['text']."'";
 				if (!empty($record['delivery']['cost'])) $tmp_sql[]="delivery_price='".$record['delivery']['cost']."'";
 				if (!empty($record['phone'])) $tmp_sql[]="phone='".$record['phone']."'";

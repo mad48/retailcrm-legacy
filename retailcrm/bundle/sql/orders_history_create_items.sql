@@ -7,7 +7,8 @@ INSERT INTO
 	`variant_name`,
     `amount`,
     `price`,
-	`sku`
+	`sku`,
+	`product_id`
 )
 
 VALUES
@@ -19,5 +20,6 @@ VALUES
 	:variant_name,
     :amount,
     :price,
-	:sku
+	:sku,
+	(SELECT s_variants.product_id FROM `s_variants` WHERE s_variants.id=:variant_id)
 )
