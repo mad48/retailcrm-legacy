@@ -9,12 +9,12 @@ class CustomersHandler implements HandlerInterface
         foreach ($data as $customer) {
             $customers[] = array(
                 'id' => $customer['id'],
-				'externalId' => $customer['externalId'],
+                'externalId' => $customer['externalId'],
                 'firstName' => $customer['firstName'],
-				'email' => $customer['email'],
-				'createdAt' => $customer['createdAt'],
-				'vip' => $customer['vip'],
-				'personalDiscount' => $customer['personalDiscount']
+                'email' => $customer['email'],
+                'createdAt' => $customer['createdAt'],
+                'vip' => $customer['vip'],
+                'personalDiscount' => $customer['personalDiscount']
             );
         }
 

@@ -8,21 +8,21 @@ class OffersHandler implements HandlerInterface
         $container = Container::getInstance();
 
         foreach ($offers as $k => $v) {
-            
-			$pictures = explode("|", $offers[$k]['picture']);
-			foreach ($pictures as $picture) {
-				$offers[$k]['pictures'][] = $container->shopUrl . '/files/originals/'.$picture;
-			}
-			unset($offers[$k]['picture']);
-			
-            $categoryId = $v['categoryId']; 
-			$offers[$k]['params']=array(
-				array("name"=>"Цвет", "code"=>"color", "value"=>$v['color']),
-				array("name"=>"Артикул", "code"=>"article", "value"=>$v['article'])
-			);
-            $offers[$k]['url'] = $container->shopUrl . '/products' . $categories[$categoryId]['path'] .'/'. $v['url'];
+
+            $pictures = explode("|", $offers[$k]['picture']);
+            foreach ($pictures as $picture) {
+                $offers[$k]['pictures'][] = $container->shopUrl . '/files/originals/' . $picture;
+            }
+            unset($offers[$k]['picture']);
+
+            $categoryId = $v['categoryId'];
+            $offers[$k]['params'] = array(
+                array("name" => "Цвет", "code" => "color", "value" => $v['color']),
+                array("name" => "Артикул", "code" => "article", "value" => $v['article'])
+            );
+            $offers[$k]['url'] = $container->shopUrl . '/products' . $categories[$categoryId]['path'] . '/' . $v['url'];
             $offers[$k]['categoryId'] = array($categoryId);
-			$offers[$k] = array_filter($offers[$k]);
+            $offers[$k] = array_filter($offers[$k]);
         }
 
         return $offers;
@@ -36,7 +36,7 @@ class OffersHandler implements HandlerInterface
         $categories = array();
         $process = true;
 
-        foreach($data as $category) {
+        foreach ($data as $category) {
             $categories[$category['id']] = array(
                 'parentId' => $category['parent_id'],
                 'path' => $category['url'],
@@ -44,11 +44,11 @@ class OffersHandler implements HandlerInterface
             );
         }
 
-        while($process) {
+        while ($process) {
             $count = 0;
-            foreach($categories as $k => $v) {
+            foreach ($categories as $k => $v) {
                 if ($v['parentId'] != 0) {
-                    $categories[$k]['path'] = $categories[$v['parentId']]['path'] .'/'. $v['path'];
+                    $categories[$k]['path'] = $categories[$v['parentId']]['path'] . '/' . $v['path'];
                     $categories[$k]['parentId'] = $categories[$v['parentId']]['parentId'];
                     $count++;
                 }

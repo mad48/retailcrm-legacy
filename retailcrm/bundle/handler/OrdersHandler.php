@@ -12,13 +12,12 @@ class OrdersHandler implements HandlerInterface
 
             if ($record['customerId']) {
                 $order['customerId'] = ($record['customerId'] == 0)
-                ? $record['externalId']
-                : $record['customerId']
-                ;
+                    ? $record['externalId']
+                    : $record['customerId'];
             }
 
-			$order['number'] = $record['number'];
-			
+            $order['number'] = $record['number'];
+
             $order['firstName'] = $record['firstName'];
             $order['lastName'] = $record['lastName'];
             $order['patronymic'] = $record['patronymic'];
@@ -34,8 +33,8 @@ class OrdersHandler implements HandlerInterface
                 ),
                 'code' => $record['deliveryType'],
                 'service' => array(
-                    'code'=> $record['deliveryService'],
-					'name'=> $record['deliveryService'],
+                    'code' => $record['deliveryService'],
+                    'name' => $record['deliveryService'],
                 )
             );
 
@@ -71,8 +70,8 @@ class OrdersHandler implements HandlerInterface
                 $item = array();
                 $item['productId'] = $data[0];
                 $item['productName'] = (isset($data[1])) ? $data[1] : 'no-name';
-                $item['quantity'] = (isset($data[2])) ? (int) $data[2] : 0;
-                $item['initialPrice'] = (isset($data[3]) && $data[3] != '') ? $data[3] : 0 ;
+                $item['quantity'] = (isset($data[2])) ? (int)$data[2] : 0;
+                $item['initialPrice'] = (isset($data[3]) && $data[3] != '') ? $data[3] : 0;
 
                 array_push($order['items'], $item);
             }
